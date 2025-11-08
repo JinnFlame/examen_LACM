@@ -1,53 +1,24 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import CardDBZ from "./components/Cards";
-import Footer from "./components/Footer";
+import Login from "./pages/Login";
+import Employees from "./pages/Employees";
+import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const getCharacters = async () => {
-    try {
-      let res = await fetch("https://dragonball-api.com/api/characters");
-      let data = await res.json();
-
-      let personajes = data.items
-        ? data.items.slice(0, 9) 
-        : data.slice(0, 9);
-
-      let chars = personajes.map((p) => ({
-        nombre: p.name,
-      }));
-
-      setCharacters(chars);
-      setLoading(false);
-    } catch (err) {
-      console.error("Error al traer personajes:", err);
-    }
-  };
-
-  useEffect(() => {
-    getCharacters();
-  }, []);
-
+export default function App() {
   return (
-    <div className="container">
-      <Header titulo="Personajes de Dragon Ball - Examen" />
-
-      {loading ? (
-        <p className="text-center">Cargando personajes...</p>
-      ) : (
-        <div className="row">
-          {characters.map((char, i) => (
-            <CardDBZ key={i} {...char} />
-          ))}
-        </div>
-      )}
-
-      <Footer />
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<div className="container">
+                                  <h2>Bienvenido al Examen AWP 2do Parcial</h2>
+                                  <span>Hecho por Luis Andres Cisneros Mendoza</span>
+                                </div>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/employees" element={<ProtectedRoute><Employees /></ProtectedRoute>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
-
-export default App;

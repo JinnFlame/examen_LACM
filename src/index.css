@@ -1,0 +1,11 @@
+body {
+  background: #f8fafc;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(36,37,38,0.05);
+}
+
+/* header tweaks */
+.navbar-brand { font-weight: 700; }
